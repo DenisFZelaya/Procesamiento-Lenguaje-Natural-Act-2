@@ -1,0 +1,7 @@
+argilla==1.9.0
+
+
+conda create -n argilla_env python=3.8
+
+
+python -m argilla users create --username zelayad --password password123 --roles admin

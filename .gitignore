@@ -1,0 +1,5 @@
+# Ignorar la carpeta results
+results/
+PDF.pdf
+
+distilbert-base-uncased-sentiment-banking/

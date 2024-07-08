@@ -1,0 +1,28 @@
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
+    environment:
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - discovery.type=single-node
+    ports:
+      - 9200:9200
+      - 9300:9300
+  rubrix:
+    build:
+      context: .
+      dockerfile: Dockerfile.rubrix
+    deploy:
+      resources:
+        reservations:
+          devices:
+              - capabilities: [gpu]
+    environment:
+      - ARGILLA_ELASTICSEARCH=http://elasticsearch:9200
+      - RUBRIX_ELASTICSEARCH=http://elasticsearch:9200
+    ports:
+      - 8888:8888
+      - 6900:6900
+    volumes:
+      - .:/home/gpu-user
+    depends_on:
+      - elasticsearch

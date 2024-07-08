@@ -1,0 +1,12 @@
+FROM jupyter/datascience-notebook:python-3.9.7
+
+WORKDIR /home/gpu-user
+ENV NB_USER=gpu-user
+ENV CHOWN_HOME=yes
+
+RUN pip install pip --upgrade
+RUN pip install "rubrix[server]==0.18.0" loguru transformers[torch] datasets scikit-learn ipywidgets tf-keras
+RUN pip install argilla
+RUN pip install --upgrade huggingface_hub
+
+CMD ["bash", "-c", "sleep 5 && nohup python -m rubrix & jupyter notebook --ip=0.0.0.0 --no-browser --allow-root"]
